@@ -1,0 +1,48 @@
+ System.setProperty("webdriver.chrome.driver", "chromedriver-win64/chromedriver.exe");
+
+        WebDriver driver = new ChromeDriver();
+        try {
+            driver.get("https://www.sberbank.com/ru/person/contributions/deposits/luchshiy_procent");
+
+            // Находим элементы формы и вводим данные
+            WebElement amountField = driver.findElement(By.name("depositAmount")); // Замените на реальное имя поля// Замените на реальный селектор
+            amountField.sendKeys("100000");
+
+            // Ждем, пока страница загрузится и результат появится
+            Thread.sleep(5000); // Можно использовать более надежное ожидание
+
+            // Парсим ответ
+            WebElement resultElement = driver.findElement(By.cssSelector("div.dk-sbol-heading.dk-sbol-heading_size_lg.dk-sbol-heading_grey.dc-result-card__revenue")); // Замените на реальный селектор
+            String result = resultElement.getText();
+
+            // Сохраняем результат в Excel
+            List<String[]> allData = new ArrayList<>();
+            allData.add(new String[]{"Результат", result});
+            writeDataToExcel(allData, "output.xlsx");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            driver.quit();
+        }
+
+    }
+
+    /*public static void writeDataToExcel(List<String[]> data, String filePath) throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Data");
+
+        int rowCount = 0;
+        for (String[] rowData : data) {
+            Row row = sheet.createRow(rowCount++);
+            int columnCount = 0;
+            for (String field : rowData) {
+                Cell cell = row.createCell(columnCount++);
+                cell.setCellValue(field);
+            }
+        }
+
+        try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
+            workbook.write(outputStream);
+        }
+        workbook.close();
+    }*/

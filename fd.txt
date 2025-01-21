@@ -1,0 +1,216 @@
+import java.util.Random;
+
+// ...
+
+@Test
+public void testExample() {
+    driver.get("https://www.sberbank.com/ru/person/contributions/deposits/luchshiy_procent");
+
+    Random random = new Random();
+    try {
+        Thread.sleep(random.nextInt(3000) + 5000); // Случайная задержка от 5 до 8 секунд
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+
+    // Остальной код теста
+}
+
+1. Использование случайных задержек
+Замените фиксированную задержку (Thread.sleep(7000)) на случайные паузы, чтобы имитировать поведение реального пользователя.
+
+java
+Copy
+import java.util.Random;
+
+// ...
+
+@Test
+public void testExample() {
+    driver.get("https://www.sberbank.com/ru/person/contributions/deposits/luchshiy_procent");
+
+    Random random = new Random();
+    try {
+        Thread.sleep(random.nextInt(3000) + 5000); // Случайная задержка от 5 до 8 секунд
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+
+    // Остальной код теста
+}
+2. Ротация User-Agent
+Добавьте случайный User-Agent для каждого запуска, чтобы сайт не мог идентифицировать запросы как исходящие от одного и того же браузера.
+
+java
+Copy
+import java.util.List;
+import java.util.Random;
+
+// ...
+
+@BeforeEach
+public void setUp() {
+    WebDriverManager.chromedriver().setup();
+    ChromeOptions options = new ChromeOptions();
+
+    // Список User-Agent для ротации
+    List<String> userAgents = List.of(
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"
+    );
+
+    Random random = new Random();
+    String randomUserAgent = userAgents.get(random.nextInt(userAgents.size()));
+    options.addArguments("--user-agent=" + randomUserAgent);
+
+    options.addArguments("--remote-allow-origins=*");
+    driver = new ChromeDriver(options);
+}
+3. Использование headless-режима
+Если сайт блокирует запросы от автоматизированных браузеров, попробуйте использовать headless-режим Chrome.
+
+java
+Copy
+@BeforeEach
+public void setUp() {
+    WebDriverManager.chromedriver().setup();
+    ChromeOptions options = new ChromeOptions();
+    options.addArguments("--headless"); // Включение headless-режима
+    options.addArguments("--disable-gpu");
+    options.addArguments("--remote-allow-origins=*");
+    driver = new ChromeDriver(options);
+}
+4. Имитация человеческого поведения
+Добавьте случайные действия, такие как перемещение курсора или прокрутка страницы.
+
+java
+Copy
+import org.openqa.selenium.interactions.Actions;
+
+// ...
+
+@Test
+public void testExample() {
+    driver.get("https://www.sberbank.com/ru/person/contributions/deposits/luchshiy_procent");
+
+    Random random = new Random();
+    try {
+        Thread.sleep(random.nextInt(3000) + 5000);
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+
+    // Имитация прокрутки страницы
+    JavascriptExecutor js = (JavascriptExecutor) driver;
+    js.executeScript("window.scrollBy(0, 500);");
+
+    // Имитация перемещения курсора
+    Actions actions = new Actions(driver);
+    actions.moveByOffset(random.nextInt(100), random.nextInt(100)).perform();
+
+    // Остальной код теста
+}
+5. Использование прокси
+Если сайт блокирует IP-адрес, используйте прокси для смены IP.
+
+java
+Copy
+@BeforeEach
+public void setUp() {
+    WebDriverManager.chromedriver().setup();
+    ChromeOptions options = new ChromeOptions();
+
+    // Настройка прокси
+    String proxyAddress = "your_proxy_address:port";
+    options.addArguments("--proxy-server=" + proxyAddress);
+
+    options.addArguments("--remote-allow-origins=*");
+    driver = new ChromeDriver(options);
+}
+6. Исправление локатора
+В вашем коде используется некорректный локатор для элемента savings. Попробуйте исправить его:
+
+java
+Copy
+WebElement savings = driver.findElement(By.cssSelector(".dk-sbol-an-number.dk-sbol-an-number_size_md.dc-result-card__animated-num"));
+System.out.println(savings.getText()); // Вывод текста элемента
+7. Обработка CAPTCHA
+Если сайт требует CAPTCHA, автоматическое решение может быть сложным. В таких случаях можно:
+
+Использовать сервисы для решения CAPTCHA (например, Anti-Captcha).
+
+Вручную решить CAPTCHA во время выполнения теста (если это допустимо).
+
+Итоговый код с улучшениями:
+java
+Copy
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.JavascriptExecutor;
+
+import java.util.List;
+import java.util.Random;
+
+public class WebTest {
+    private WebDriver driver;
+
+    @BeforeEach
+    public void setUp() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+
+        // Ротация User-Agent
+        List<String> userAgents = List.of(
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"
+        );
+        Random random = new Random();
+        String randomUserAgent = userAgents.get(random.nextInt(userAgents.size()));
+        options.addArguments("--user-agent=" + randomUserAgent);
+
+        options.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver(options);
+    }
+
+    @Test
+    public void testExample() {
+        driver.get("https://www.sberbank.com/ru/person/contributions/deposits/luchshiy_procent");
+
+        Random random = new Random();
+        try {
+            Thread.sleep(random.nextInt(3000) + 5000); // Случайная задержка
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Имитация прокрутки и перемещения курсора
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0, 500);");
+
+        Actions actions = new Actions(driver);
+        actions.moveByOffset(random.nextInt(100), random.nextInt(100)).perform();
+
+        WebElement depositAmount = driver.findElement(By.name("depositAmount"));
+        depositAmount.sendKeys("100000");
+
+        WebElement savings = driver.findElement(By.cssSelector(".dk-sbol-an-number.dk-sbol-an-number_size_md.dc-result-card__animated-num"));
+        System.out.println(savings.getText());
+
+        driver.quit();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+}
