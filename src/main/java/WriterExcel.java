@@ -1,5 +1,4 @@
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class WriterExcel {
-    public void writeToExcel( String result) {
+    public void writeToExcel(String segment, String result) {
         try (FileInputStream fileIn = new FileInputStream(new File("Результат.xlsx"))){
             Workbook workbook = WorkbookFactory.create(fileIn);
             Sheet sheet = workbook.getSheetAt(0);
@@ -15,7 +14,7 @@ public class WriterExcel {
             int lastRowNum = sheet.getLastRowNum();
             Row newRow = sheet.createRow(lastRowNum + 1);
             Cell cell =  newRow.createCell(0);
-            cell.setCellValue("Итоговая сумма");
+            cell.setCellValue(segment);
 
             cell = newRow.createCell(1);
             cell.setCellValue(result);
