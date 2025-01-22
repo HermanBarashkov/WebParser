@@ -1,13 +1,13 @@
 import org.apache.poi.ss.usermodel.*;
 
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class WriterExcel {
     public void writeToExcel(String segment, String result) {
-        try (FileInputStream fileIn = new FileInputStream(new File("Результат.xlsx"))){
+        try (FileInputStream fileIn = new FileInputStream("Результат.xlsx")){
             Workbook workbook = WorkbookFactory.create(fileIn);
             Sheet sheet = workbook.getSheetAt(0);
 
