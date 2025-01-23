@@ -3,27 +3,27 @@ import org.aeonbits.owner.Config.Sources;
 
 @Sources({"classpath:site.properties"})
 public interface ConfigReader extends Config {
-    @Key("sber-best")
+    @Key("sber.best")
     String sberBest();
-    @Key("sber-sber-deposit")
+    @Key("sber.sber.deposit")
     String sberDeposit();
-    @Key("sber-best-leader")
+    @Key("sber.best.leader")
     String sberBestLead();
-    @Key("sber-sber-deposit-leader")
+    @Key("sber.sber.deposit.leader")
     String sberDepositLead();
-    @Key("alfa-new-money")
+    @Key("alfa.new.money")
     String alfaNewMoney();
-    @Key("alfa-max.Url")
+    @Key("alfa.max.Url")
     String alfaMaxUrl();
-    @Key("vtb-deposit")
+    @Key("vtb.deposit")
     String vtbDeposit();
-    @Key("gpb-sky-high")
+    @Key("gpb.sky.high")
     String gpbSkyHigh();
-    @Key("gpb-new-money")
+    @Key("gpb.new.money")
     String gpbNewMoney();
-    @Key("gpb-in-plus")
+    @Key("gpb.in.plus")
     String gpbInPlus();
-    @Key("t-bank-deposit")
+    @Key("t.bank.deposit")
     String tBankDeposit();
 
 }
