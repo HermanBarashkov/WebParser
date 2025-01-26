@@ -38,25 +38,33 @@ public class AlfaTests {
 
     @AfterEach
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+        driver.quit();
+
     }
 
     @Test
     public void maxRozn() {
         driver.get(ConfProvider.getProps().alfaMaxUrl());
         actions.scrollByAmount(0, 1000).perform();
-        WebElement amountInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(AMOUNT_INPUT_CSS)));
+        WebElement amountInput = wait.until(ExpectedConditions.visibilityOfElementLocated
+                (By.cssSelector(AMOUNT_INPUT_CSS)));
         String selectAll = Keys.chord(Keys.CONTROL, "a");
         amountInput.sendKeys(selectAll);
         amountInput.sendKeys(TEST_AMOUNT);
-        for (int i = 1; i<=8; i++) {
+
+        String[] month = new String[15];
+        for (int i = 1; i <= 15; i++) {
             String button = String.format(MONTHS_BUTTON_CSS, i);
             WebElement monthsButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(button)));
             monthsButton.click();
             WebElement finalAmount = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span[data-test-id='amountAtTheEnd-all-value-rub']")));
-            excelWriter.writeToExcel(1, 13 + i, finalAmount.getText());
+            month[i - 1] = finalAmount.getText();
         }
+        MonthPOJO monthPOJO = MonthMapper.INSTANCE.mapToMonthPOJO(month[0], month[1],month[2], month[3], month[4], month[5],
+                month[6],month[7],month[8],month[9], month[10], month[11], month[12], month[13], month[14]);
+
+        excelWriter.writeToExcel(monthPOJO);
     }
+
+
 }
