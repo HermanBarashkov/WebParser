@@ -1,48 +1,35 @@
- System.setProperty("webdriver.chrome.driver", "chromedriver-win64/chromedriver.exe");
 
-        WebDriver driver = new ChromeDriver();
-        try {
-            driver.get("https://www.sberbank.com/ru/person/contributions/deposits/luchshiy_procent");
 
-            // Находим элементы формы и вводим данные
-            WebElement amountField = driver.findElement(By.name("depositAmount")); // Замените на реальное имя поля// Замените на реальный селектор
-            amountField.sendKeys("100000");
 
-            // Ждем, пока страница загрузится и результат появится
-            Thread.sleep(5000); // Можно использовать более надежное ожидание
 
-            // Парсим ответ
-            WebElement resultElement = driver.findElement(By.cssSelector("div.dk-sbol-heading.dk-sbol-heading_size_lg.dk-sbol-heading_grey.dc-result-card__revenue")); // Замените на реальный селектор
-            String result = resultElement.getText();
+    private static final String AMOUNT_INPUT_CSS = "div.form-control__input_1xotc > input";
+    private static final String MONTHS_BUTTON_CSS = "button:nth-child(%d) > span";
+    /*private WebDriverWait wait;
+    private WriterExcel excelWriter;
+    private Actions actions;*/
 
-            // Сохраняем результат в Excel
-            List<String[]> allData = new ArrayList<>();
-            allData.add(new String[]{"Результат", result});
-            writeDataToExcel(allData, "output.xlsx");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            driver.quit();
-        }
+@BeforeALl
+       /* wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        actions = new Actions(driver);
+        excelWriter = new WriterExcel();*/
 
-    }
+@TEST
+       /*
+        actions.scrollByAmount(0, 1000).perform();
+        WebElement amountInput = wait.until(ExpectedConditions.visibilityOfElementLocated
+                (By.cssSelector(AMOUNT_INPUT_CSS)));
+        String selectAll = Keys.chord(Keys.CONTROL, "a");
+        amountInput.sendKeys(selectAll);
+        amountInput.sendKeys(TEST_AMOUNT);
 
-    /*public static void writeDataToExcel(List<String[]> data, String filePath) throws IOException {
-        Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("Data");
+        for (int i = 1; i <= 8; i++) {
+            String button = String.format(MONTHS_BUTTON_CSS, i);
+            WebElement monthsButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(button)));
+            monthsButton.click();
+            WebElement period = driver.findElement(By.name("period"));
+            int month = Integer.parseInt(period.getAttribute("value"));
 
-        int rowCount = 0;
-        for (String[] rowData : data) {
-            Row row = sheet.createRow(rowCount++);
-            int columnCount = 0;
-            for (String field : rowData) {
-                Cell cell = row.createCell(columnCount++);
-                cell.setCellValue(field);
-            }
-        }
+            WebElement rate = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span[data-test-id='interestRate-all-value-rub']")));
+            excelWriter.writeToExcel(1, month, rate.getText());
 
-        try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
-            workbook.write(outputStream);
-        }
-        workbook.close();
-    }*/
+        */
