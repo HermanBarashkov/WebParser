@@ -20,15 +20,15 @@ public class AlfaMaxPage {
     @FindBy(xpath = "//*[contains(@class, 'input__input_qe78h input__input_frf69 input__l_qe78h input__hasInnerLabel_qe78h input__hasInnerLabel_frf69 amount-input__input_puwah')]")
     private WebElement amountInput;
     @FindBy(xpath = "//*[contains(text(), '2 месяца')]")
-    private WebElement months2Btn;
+    private WebElement month2Btn;
     @FindBy(xpath = "//*[contains(text(), '3 месяца')]")
-    private WebElement months3Btn;
+    private WebElement month3Btn;
     @FindBy(xpath = "//*[contains(text(), '4 месяца')]")
-    private WebElement months4Btn;
+    private WebElement month4Btn;
     @FindBy(xpath = "//*[contains(text(), '6 месяцев')]")
-    private WebElement months6Btn;
+    private WebElement month6Btn;
     @FindBy(xpath = "//*[contains(text(), '9 месяцев')]")
-    private WebElement months9Btn;
+    private WebElement month9Btn;
     @FindBy(xpath = "//*[contains(text(), '1 год')]")
     private WebElement year1Btn;
     @FindBy(xpath = "//*[contains(text(), '1,5 года')]")
@@ -38,7 +38,9 @@ public class AlfaMaxPage {
     @FindBy(xpath = "//*[contains(text(), '3 года')]")
     private WebElement year3Btn;
     @FindBy(xpath = "//*[contains(@data-test-id, 'interestRate-all-value-rub')]")
-    private WebElement rate;
+    private WebElement rateAll;
+    @FindBy(xpath = "//*[contains(@data-test-id, 'interestRate-premium-value-rub')]")
+    private WebElement ratePrem;
 
     public void setAmountInput(String amount){
         String selectAll = Keys.chord(Keys.CONTROL, "a");
@@ -48,22 +50,25 @@ public class AlfaMaxPage {
     public void clickBtn(WebElement button){
         Actions actions = new Actions(driver);
         actions.scrollToElement(button).perform();
-        months2Btn.click();
+        button.click();
     }
     public List<WebElement> getAllBtn(){
         return List.of(
-                months2Btn,
-                months3Btn,
-                months4Btn,
-                months6Btn,
-                months9Btn,
+                month2Btn,
+                month3Btn,
+                month4Btn,
+                month6Btn,
+                month9Btn,
                 year1Btn,
                 year1_5Btn,
                 year2Btn,
                 year3Btn
         );
     }
-    public String getRate(){
-        return rate.getText();
+    public String getRateAll(){
+        return rateAll.getText();
+    }
+    public String getRatePrem(){
+        return ratePrem.getText();
     }
 }

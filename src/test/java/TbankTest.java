@@ -5,16 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import pageObject.AlfaMaxPage;
 import pageObject.TbankPage;
 
-import java.time.Duration;
+
 import java.util.concurrent.TimeUnit;
 
 public class TbankTest {
     private static final String TEST_AMOUNT = "50000";
-    private static final String TEST_MONTH = "4";
 
     public static TbankPage tbankPage;
     public static WebDriver driver;
@@ -29,9 +26,6 @@ public class TbankTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(ConfProvider.getProps().tBankDeposit());
-       /* wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        actions = new Actions(driver);
-        excelWriter = new WriterExcel();*/
     }
 
     @AfterEach

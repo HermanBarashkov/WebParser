@@ -6,10 +6,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import pageObject.AlfaMaxPage;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
-public class AlfaTests {
+public class AlfaMaxTest {
 
     private static final String TEST_AMOUNT = "50000";
     public static AlfaMaxPage alfaMaxPage;
@@ -24,7 +23,7 @@ public class AlfaTests {
         driver = new ChromeDriver(options);
         alfaMaxPage = new AlfaMaxPage(driver);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);//неявное ожидание для загрузки страницы
         driver.get(ConfProvider.getProps().alfaMaxUrl());
 
     }
@@ -42,7 +41,7 @@ public class AlfaTests {
         List<WebElement> buttons = alfaMaxPage.getAllBtn();
         for (WebElement button : buttons) {
             alfaMaxPage.clickBtn(button);
-            System.out.println("M: " + button.getText() + " R:" + alfaMaxPage.getRate());
+            System.out.println("M:" + button.getText() + " R:" + alfaMaxPage.getRateAll());
         }
     }
 
