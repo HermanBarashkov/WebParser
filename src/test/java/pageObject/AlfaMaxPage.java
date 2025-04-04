@@ -74,4 +74,7 @@ public class AlfaMaxPage {
     public String getMet(){
         return null;
     }
+    public String getMem(){
+        return null;
+    }
 }
