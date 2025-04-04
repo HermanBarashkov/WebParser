@@ -80,4 +80,7 @@ public class AlfaMaxPage {
     public String getsdf(){
         return null;
     }
+    public String dfefw() {
+        return null;
+    }
 }
