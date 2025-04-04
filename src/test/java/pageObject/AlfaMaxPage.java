@@ -86,4 +86,7 @@ public class AlfaMaxPage {
     public String sdfsdfs(){
         return null;
     }
+    public String rlzapqw(){
+        return null;
+    }
 }
