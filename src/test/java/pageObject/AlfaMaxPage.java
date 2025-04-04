@@ -71,4 +71,7 @@ public class AlfaMaxPage {
     public String getRatePrem(){
         return ratePrem.getText();
     }
+    public String getMet(){
+        return null;
+    }
 }
